@@ -11,7 +11,7 @@ namespace SimpleBlog_EF.Controllers.Home
         // GET: Home
         public ActionResult Index()
         {
-            return Content("Home Working!");
+            return View();
         }
     }
 }

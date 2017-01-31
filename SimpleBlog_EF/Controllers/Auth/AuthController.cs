@@ -11,7 +11,7 @@ namespace SimpleBlog_EF.Controllers.Auth
         // GET: Auth
         public ActionResult Login()
         {
-            return Content("Login Working");
+            return View();
         }
     }
 }
