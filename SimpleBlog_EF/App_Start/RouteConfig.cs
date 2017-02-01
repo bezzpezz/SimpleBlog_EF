@@ -22,6 +22,14 @@ namespace SimpleBlog_EF
                 defaults: new { controller = "Auth", action = "Login"}
             );
 
+            //Logout Route
+            routes.MapRoute(
+                name: "Logout",
+                url: "logout",
+                defaults: new { controller = "Auth", action = "Logout" },
+                namespaces: namespaces
+            );
+
             // Home
             routes.MapRoute(
                 name: "Home",

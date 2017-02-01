@@ -15,6 +15,17 @@
             <h1>
                 <a href="@Url.RouteUrl("Home")">SimpleBlog</a>
             </h1>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>Welcome Back @User.Identity.Name</p>
+                <a href="@Url.RouteUrl("logout")">Logout</a>
+
+                if (User.IsInRole("admin"))
+                {
+                    <a href="@Url.Action("index", "home", new { area = "admin"})">Enter Admin Area!</a>
+                }
+            }
         </header>
         <div>
             @RenderBody()
