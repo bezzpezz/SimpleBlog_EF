@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleBlog_EF.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,9 +11,10 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         // GET: Admin/Home
+        [SelectedTab("home")]
         public ActionResult Index()
         {
-            return Content("Admin Home!");
+            return View();
         }
     }
 }
