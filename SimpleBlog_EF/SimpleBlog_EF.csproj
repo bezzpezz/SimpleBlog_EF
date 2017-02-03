@@ -148,6 +148,14 @@
     <Compile Include="DataAccessLayer\AppUserMigrations\201702021413022_Initial AppUserDB Create.Designer.cs">
       <DependentUpon>201702021413022_Initial AppUserDB Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.cs" />
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.Designer.cs">
+      <DependentUpon>201702022328039_Added User Avatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.cs" />
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.Designer.cs">
+      <DependentUpon>201702022357592_Changed UserRoleId to Id.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataAccessLayer\AppUserMigrations\Configuration.cs" />
     <Compile Include="DataAccessLayer\AppUsersDBContext.cs" />
     <Compile Include="DataAccessLayer\MainDBContext.cs" />
@@ -200,6 +208,12 @@
   <ItemGroup>
     <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702021413022_Initial AppUserDB Create.resx">
       <DependentUpon>201702021413022_Initial AppUserDB Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.resx">
+      <DependentUpon>201702022328039_Added User Avatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.resx">
+      <DependentUpon>201702022357592_Changed UserRoleId to Id.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702021206236_Initial Create and Seed.resx">
       <DependentUpon>201702021206236_Initial Create and Seed.cs</DependentUpon>

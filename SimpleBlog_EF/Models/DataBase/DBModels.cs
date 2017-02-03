@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using SimpleBlog_EF.Infrastructure;
 
 namespace SimpleBlog_EF.Models.DataBase
 {
@@ -23,6 +21,7 @@ namespace SimpleBlog_EF.Models.DataBase
         
         [Required]
         public string Email { get; set; }
+        public string Avatar { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string Password_Hash { get; set; }
@@ -42,7 +41,7 @@ namespace SimpleBlog_EF.Models.DataBase
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserRoleId { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("User")]
         public int UserId { get; set; }
@@ -300,7 +299,6 @@ namespace SimpleBlog_EF.Models.DataBase
             public bool IsRemoved { get; set; }
 
             public virtual Customer Customer { get; set; }
-
         }
 
         public class JobOrderDetails
