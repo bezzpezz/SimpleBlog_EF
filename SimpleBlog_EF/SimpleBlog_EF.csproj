@@ -48,6 +48,10 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -114,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Scripts\Forms.js" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Styles\Admin.css" />
     <Content Include="Content\Styles\bootstrap.css" />
@@ -122,6 +127,9 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\New.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\ResetPassword.cshtml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
@@ -142,19 +150,17 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Users.cs" />
+    <Compile Include="Auth.cs" />
     <Compile Include="Controllers\Auth\AuthController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702021413022_Initial AppUserDB Create.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702021413022_Initial AppUserDB Create.Designer.cs">
-      <DependentUpon>201702021413022_Initial AppUserDB Create.cs</DependentUpon>
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.cs" />
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.Designer.cs">
+      <DependentUpon>201702030326081_Initial AppUserDB Create.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.Designer.cs">
-      <DependentUpon>201702022328039_Added User Avatar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.Designer.cs">
-      <DependentUpon>201702022357592_Changed UserRoleId to Id.cs</DependentUpon>
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.cs" />
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.Designer.cs">
+      <DependentUpon>201702030531437_AppUserDB Update.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\AppUserMigrations\Configuration.cs" />
     <Compile Include="DataAccessLayer\AppUsersDBContext.cs" />
@@ -206,14 +212,11 @@
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702021413022_Initial AppUserDB Create.resx">
-      <DependentUpon>201702021413022_Initial AppUserDB Create.cs</DependentUpon>
+    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.resx">
+      <DependentUpon>201702030326081_Initial AppUserDB Create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702022328039_Added User Avatar.resx">
-      <DependentUpon>201702022328039_Added User Avatar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702022357592_Changed UserRoleId to Id.resx">
-      <DependentUpon>201702022357592_Changed UserRoleId to Id.cs</DependentUpon>
+    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.resx">
+      <DependentUpon>201702030531437_AppUserDB Update.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702021206236_Initial Create and Seed.resx">
       <DependentUpon>201702021206236_Initial Create and Seed.cs</DependentUpon>

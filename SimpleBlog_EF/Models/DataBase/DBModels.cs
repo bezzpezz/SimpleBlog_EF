@@ -12,9 +12,17 @@ namespace SimpleBlog_EF.Models.DataBase
 
     public class User
     {
+        private const int WorkFactor = 13;
+
+        // This stops Timeattacks on this server - stops people from checking how long i takes for the server to return a response (always longer if they are and then they know you are registered) if  user is in the database or not
+        public static void FakeHash()
+        {
+            BCrypt.Net.BCrypt.HashPassword("", WorkFactor);
+        }
+
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Username { get; set; }
@@ -24,8 +32,17 @@ namespace SimpleBlog_EF.Models.DataBase
         public string Avatar { get; set; }
 
         [Required, DataType(DataType.Password)]
-        public string Password_Hash { get; set; }
+        public string PasswordHash { get; set; }
 
+        public virtual void SetPassword(string Password)
+        {
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(Password, WorkFactor);
+        }
+
+        public virtual bool CheckPassword(string Password)
+        {
+            return BCrypt.Net.BCrypt.Verify(Password, PasswordHash);
+        }
     }
 
     public class Role

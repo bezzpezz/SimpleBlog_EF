@@ -13,8 +13,8 @@ namespace SimpleBlog_EF.DataAccessLayer
         {
             var users = new List<User>
             {
-                new User {Username="Beren",Email="berenlyell@hotmail.com", Password_Hash="239487sfh" },
-                new User {Username="Steve",Email="steve@hotmail.com", Password_Hash="239487sfh" },
+                new User {Username="Beren",Email="berenlyell@hotmail.com", PasswordHash="239487sfh" },
+                new User {Username="Steve",Email="steve@hotmail.com", PasswordHash="239487sfh" },
             };
 
             var roles = new List<Role>

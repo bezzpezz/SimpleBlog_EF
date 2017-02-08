@@ -1,2 +1,35 @@
-﻿body {
+﻿.font-btn {
+    font-family: 'Ubuntu', sans-serif;
+}﻿﻿
+
+.field-validation-error{
+    color: red;
+
+}
+
+.field-validation-valid{
+    display: none;
+}
+
+.input-validation-error{
+    border: 1px solid red;
+    background-color: #ffeeee
+}
+
+.validation-summary-errors{
+    font-weight: bold;
+    color: red;
+} 
+
+.btn-group-vertical div {
+    margin-bottom:4px !important;
+}
+
+.btn-group-vertical > .btn:last-child {
+    margin-bottom:4px;
+}
+
+.btn-group-vertical > .btn:not(:first-child):not(:last-child) {
+    margin-bottom:4px;
+    margin-top:4px;
 }

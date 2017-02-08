@@ -1,2 +1,63 @@
-﻿
-<h1>Admin Users!</h1>
+﻿@model SimpleBlog_EF.Areas.Admin.ViewModels.UsersIndex
+
+<h1>Users List</h1>
+
+<div class="btn-toolbar">
+    <a href="@Url.Action("new")" class="btn btn-primary btn-sm"><i class=" glyphicon glyphicon-plus"></i>Create User</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Username</td>
+                <td>@user.Email</td>
+                <td>{todo}</td>
+                <td>
+                    <div class="">
+                        <form class="form-submit" method="get"> 
+                            <button type="submit" class="btn btn-sm btn-primary" formaction="@Url.Action("edit", new { user.Id })">
+                                <span class="glyphicon glyphicon-edit"></span>&nbsp;
+                                <span class="font-btn">Edit</span>
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-default" formaction="@Url.Action("resetpassword", new { user.Id })">
+                                <span class="glyphicon glyphicon-lock"></span>&nbsp;
+                                <span class="font-btn">Reset Pass</span>
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-danger" formaction="@Url.Action("delete", new { user.Id })">
+                                <span class="glyphicon glyphicon-remove"></span>&nbsp;
+                                <span class="font-btn">Delete</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    @*<div class="btn-group">
+                        <a href="@Url.Action("edit", new { id = user.Id })" class="btn btn-xs btn-primary">
+                        <i class="glyphicon glyphicon-edit"></i>
+                            Edit
+                        </a>
+                        <a href="@Url.Action("resetpassword", new { id = user.Id })" class="btn btn-xs btn-default">
+                            <i class="glyphicon glyphicon-lock"></i>
+                            Reset Password
+                        </a>
+                        <a href="@Url.Action("delete", new { user.Id })" class="btn btn-xs btn-danger" data-post="Are you sure you want to delete @user.Username?">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            Delete
+                        </a>
+                    </div>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
