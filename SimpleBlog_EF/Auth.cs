@@ -22,15 +22,16 @@ namespace SimpleBlog_EF
                 var user = HttpContext.Current.Items[UserKey] as User;
                 if(user == null)
                 {
-                    using (db = new AppUsersDBContext())
-                    {
-                        user = db.Users.FirstOrDefault(u => u.Username == HttpContext.Current.User.Identity.Name);
+                    db = new AppUsersDBContext();
+                                    
+                    user = db.Users.Include("Roles").ToList()
+                        .FirstOrDefault(u => u.Username == HttpContext.Current.User.Identity.Name);
 
-                        if (user == null)
-                            return null;
+                    if (user == null)
+                        return null;
 
-                        HttpContext.Current.Items[UserKey] = user;
-                    }
+                    HttpContext.Current.Items[UserKey] = user;
+
                 }
 
                 return user;

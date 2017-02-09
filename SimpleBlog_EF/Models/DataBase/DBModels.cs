@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,6 +34,14 @@ namespace SimpleBlog_EF.Models.DataBase
 
         [Required, DataType(DataType.Password)]
         public string PasswordHash { get; set; }
+        
+        public virtual ICollection<Role> Roles { get; set; }
+
+        public User()
+        {
+            // Instatiate the Roles list here to avoid null references
+            Roles = new List<Role>();
+        }
 
         public virtual void SetPassword(string Password)
         {
@@ -52,23 +61,25 @@ namespace SimpleBlog_EF.Models.DataBase
         public int RoleId { get; set; }
         public string Name { get; set; }
 
+        public virtual ICollection<User> Users { get; set; }
+
     }
 
-    public class UserRole
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+    //public class UserRole
+    //{
+    //    [Key]
+    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+    //    public int Id { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+    //    [ForeignKey("User")]
+    //    public int UserId { get; set; }
 
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
+    //    [ForeignKey("Role")]
+    //    public int RoleId { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
-    }
+    //    public virtual User User { get; set; }
+    //    public virtual Role Role { get; set; }
+    //}
     #endregion
 
     #region MainDB Schema

@@ -1,8 +1,6 @@
 namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
 {
     using Models.DataBase;
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -27,14 +25,8 @@ namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
 
                 context.Roles.AddOrUpdate(
                     new Role() { Name = "admin" },
-                    new Role() { Name = "CanEdit" },
+                    new Role() { Name = "edit" },
                     new Role() { Name = "user" }
-                );
-
-                context.UserRoles.AddOrUpdate(
-                    new UserRole() { UserId = 1, RoleId = 1 },
-                    new UserRole() { UserId = 1, RoleId = 2 },
-                    new UserRole() { UserId = 2, RoleId = 3 }
                 );
 
             }

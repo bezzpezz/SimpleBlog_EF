@@ -20,3 +20,11 @@
     font-weight: bold;
     color: red;
 }
+
+th, td{
+    text-align: center;
+}
+
+td button{
+    font-weight: bold !important;
+}

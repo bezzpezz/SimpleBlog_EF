@@ -19,10 +19,12 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         {
             using (var db = new AppUsersDBContext())
             {
-                return View(new UsersIndex
+                var ui = new UsersIndex
                 {
-                    Users = db.Users.ToList()
-                });
+                    Users = db.Users.Include("Roles")
+                        .ToList()
+                };
+                return View(ui);
             }
         }
 

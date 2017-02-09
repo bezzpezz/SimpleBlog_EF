@@ -8,7 +8,7 @@ namespace SimpleBlog_EF.Controllers.Auth
 {
     public class AuthController : Controller
     {
-        AppUsersDBContext db;
+        private AppUsersDBContext db;
 
         // GET: Auth
         public ActionResult Login()

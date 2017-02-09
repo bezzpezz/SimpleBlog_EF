@@ -23,7 +23,12 @@
                 <td>@user.Id</td>
                 <td>@user.Username</td>
                 <td>@user.Email</td>
-                <td>{todo}</td>
+                <td>
+                    @foreach (var role in user.Roles)
+                    {
+                        <button class="btn btn-default">@role.Name</button>
+                    }
+                </td>
                 <td>
                     <div class="">
                         <form class="form-submit" method="get"> 

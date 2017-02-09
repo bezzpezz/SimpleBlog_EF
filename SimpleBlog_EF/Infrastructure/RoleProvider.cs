@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleBlog_EF.DataAccessLayer;
+using SimpleBlog_EF.Models.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +10,21 @@ namespace SimpleBlog_EF.Infrastructure
 {
     public class RoleProvider : System.Web.Security.RoleProvider
     {
+        //Global DB Context
+        private AppUsersDBContext db;
+
         public override string[] GetRolesForUser(string username)
         {
-            if (username == "Beren")
-                return new[] { "admin" };
+            //var userRoles = new string[] { };
 
-            return new string[] { };
+            //using (db = new AppUsersDBContext())
+            //{
+            //    userRoles = db.Roles.Select(x => x.Name).ToArray();
+            //}
+
+            return Auth.User.Roles.Select(role => role.Name).ToArray();
+
+            //return userRoles;
         }
 
         public override string ApplicationName

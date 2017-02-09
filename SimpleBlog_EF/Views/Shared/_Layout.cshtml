@@ -17,7 +17,8 @@
     <body class="body">
         <header>
             <h1>
-                <a href="@Url.RouteUrl("Home")">SimpleBlog</a>
+                <a href="@Url.RouteUrl("Home")">SimpleBlog</a></br>
+                <p>@ViewBag.hash</p>
                 <i class="glyphicon glyphicon-bell"></i>
             </h1>
 
@@ -30,13 +31,13 @@
                 {
                     <a href="@Url.Action("index", "home", new { area = "admin"})">Enter Admin Area!</a>
                 }
-                if (User.IsInRole("canEdit"))
+                if (User.IsInRole("edit"))
                 {
-                    <a href="@Url.Action("index", "home", new { area = "admin"})">canEdit</a>
+                    <a href="@Url.Action("index", "home", new { area = "admin"})">Edit</a>
                 }
                 if (User.IsInRole("user"))
                 {
-                    <a href="@Url.Action("index", "home", new { area = "admin"})">user</a>
+                    <a href="@Url.Action("index", "home", new { area = "admin"})">User</a>
                 }
 
             }

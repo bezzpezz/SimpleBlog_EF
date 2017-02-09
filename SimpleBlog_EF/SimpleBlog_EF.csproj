@@ -154,13 +154,9 @@
     <Compile Include="Auth.cs" />
     <Compile Include="Controllers\Auth\AuthController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.Designer.cs">
-      <DependentUpon>201702030326081_Initial AppUserDB Create.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.Designer.cs">
-      <DependentUpon>201702030531437_AppUserDB Update.cs</DependentUpon>
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702080403439_Initial Seed.cs" />
+    <Compile Include="DataAccessLayer\AppUserMigrations\201702080403439_Initial Seed.Designer.cs">
+      <DependentUpon>201702080403439_Initial Seed.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\AppUserMigrations\Configuration.cs" />
     <Compile Include="DataAccessLayer\AppUsersDBContext.cs" />
@@ -209,14 +205,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="OmittedCode\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702030326081_Initial AppUserDB Create.resx">
-      <DependentUpon>201702030326081_Initial AppUserDB Create.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702030531437_AppUserDB Update.resx">
-      <DependentUpon>201702030531437_AppUserDB Update.cs</DependentUpon>
+    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702080403439_Initial Seed.resx">
+      <DependentUpon>201702080403439_Initial Seed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702021206236_Initial Create and Seed.resx">
       <DependentUpon>201702021206236_Initial Create and Seed.cs</DependentUpon>

@@ -23,12 +23,12 @@ namespace SimpleBlog_EF.DataAccessLayer
                 new Role {Name="user"},
             };
 
-            var userRoles = new List<UserRole>
-            {
-                new UserRole {RoleId=1, UserId=1 },
-                new UserRole {RoleId=2, UserId=1 },
-                new UserRole {RoleId=2, UserId=1 }
-            };
+            //var userRoles = new List<UserRole>
+            //{
+            //    new UserRole {RoleId=1, UserId=1 },
+            //    new UserRole {RoleId=2, UserId=1 },
+            //    new UserRole {RoleId=2, UserId=1 }
+            //};
         }
 
     }
