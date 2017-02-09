@@ -276,3 +276,5 @@ __pycache__/
 
 Thumbs.db
 Desktop.ini
+Tools/
+OmittedCode/
