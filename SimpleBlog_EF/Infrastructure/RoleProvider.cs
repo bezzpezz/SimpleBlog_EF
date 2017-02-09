@@ -15,16 +15,12 @@ namespace SimpleBlog_EF.Infrastructure
 
         public override string[] GetRolesForUser(string username)
         {
-            //var userRoles = new string[] { };
-
-            //using (db = new AppUsersDBContext())
-            //{
-            //    userRoles = db.Roles.Select(x => x.Name).ToArray();
-            //}
-
             return Auth.User.Roles.Select(role => role.Name).ToArray();
+        }
 
-            //return userRoles;
+        public List<Role> GetUserRolesAsList(string username)
+        {
+            return Auth.User.Roles.Select(role => new Role { Name = role.Name, RoleId = role.RoleId }).ToList();
         }
 
         public override string ApplicationName

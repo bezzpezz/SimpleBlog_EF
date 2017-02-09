@@ -28,3 +28,16 @@ th, td{
 td button{
     font-weight: bold !important;
 }
+
+.panel-head-checks input[type=checkbox]{
+    transform: scale(1.5);  
+}
+
+.panel-head-checks input {
+    vertical-align: middle;
+    margin-top: 0px;
+    height: 20px;
+}
+.panel-head-checks label span {
+  vertical-align: middle;
+}

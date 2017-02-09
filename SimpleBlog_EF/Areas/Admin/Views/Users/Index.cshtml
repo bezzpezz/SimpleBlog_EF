@@ -1,5 +1,19 @@
 ﻿@model SimpleBlog_EF.Areas.Admin.ViewModels.UsersIndex
-
+@helper getButtonType(string name)
+{
+if (name == "user")
+{
+        @:btn-default
+    }
+    if (name == "editor")
+    {
+        @:btn-warning
+    }
+    if (name == "admin")
+    {
+        @:btn-danger
+    }
+}
 <h1>Users List</h1>
 
 <div class="btn-toolbar">
@@ -26,17 +40,17 @@
                 <td>
                     @foreach (var role in user.Roles)
                     {
-                        <button class="btn btn-default">@role.Name</button>
+                        <button class="btn btn-default @getButtonType(role.Name)">@role.Name</button>
                     }
                 </td>
                 <td>
                     <div class="">
                         <form class="form-submit" method="get"> 
-                            <button type="submit" class="btn btn-sm btn-primary" formaction="@Url.Action("edit", new { user.Id })">
+                            <button type="submit" class="btn btn-sm btn-warning" formaction="@Url.Action("edit", new { user.Id })">
                                 <span class="glyphicon glyphicon-edit"></span>&nbsp;
                                 <span class="font-btn">Edit</span>
                             </button>
-                            <button type="submit" class="btn btn-sm btn-default" formaction="@Url.Action("resetpassword", new { user.Id })">
+                            <button type="submit" class="btn btn-sm btn-primary" formaction="@Url.Action("resetpassword", new { user.Id })">
                                 <span class="glyphicon glyphicon-lock"></span>&nbsp;
                                 <span class="font-btn">Reset Pass</span>
                             </button>

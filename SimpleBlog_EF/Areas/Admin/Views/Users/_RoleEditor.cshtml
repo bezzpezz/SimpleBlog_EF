@@ -1,0 +1,62 @@
+﻿@model IList<SimpleBlog_EF.Areas.Admin.ViewModels.RoleCheckBox>
+
+@helper getPanelType(string name)
+{
+if (name == "user")
+{
+        @: panel-default
+    }
+    if (name == "editor")
+    {
+        @: panel-warning
+    }
+    if (name == "admin")
+    {
+        @: panel-danger
+    }
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">Roles</div>
+    <div class="panel-body">
+        <div class="row">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <div class="col-xs-4">
+                    <div class="panel @getPanelType(Model[i].Name)">
+                        <div class="panel-heading text-center panel-head-checks">
+                            @Html.Hidden("Roles[" + i + "].Id", Model[i].Id)
+                            <label for="Role_@(i)__IsChecked">
+                                @Html.CheckBox("Roles[" + i + "].IsChecked", Model[i].IsChecked)
+                                <span>
+                                    @Model[i].Name
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    @*<div class="panel-body">
+            <div class="row">
+                {var reversedRoles = Model.Roles.Reverse();}
+                foreach (var role in reversedRoles)
+                {
+                    <div class="col-xs-4">
+                        <div class="panel @getPanelType(role.Name)">
+                            <div class="panel-heading text-center panel-head-checks">
+                                @Html.Hidden("Roles[" + role.Id + "].Id", role.Id)
+                                <label for="Role_(role.Id)__IsChecked">
+                                    @Html.CheckBox("Roles[" + role.Id + "].IsChecked", role.IsChecked)
+                                    <span>
+                                        role.Name
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>*@
+</div>
