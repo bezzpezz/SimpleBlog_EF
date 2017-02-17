@@ -21,6 +21,23 @@
             .submit();
     });
 
+    $("[data-slug]").each(function () {
+        var $this = $(this);
+        var $sendSlugFrom = $($this.data("slug"));
+
+        $sendSlugFrom.keyup(function () {
+            var slug = $sendSlugFrom.val();
+            slug = slug.replace(/[^a-zA-Z0-9\s]/g, "");
+            slug = slug.toLowerCase();
+            slug = slug.replace(/\s+/g, "-");
+
+            if (slug.charAt(slug.length - 1 == "-"))
+                slug = slug.substr(0, slug.length - 1);
+
+            $this.val(slug);
+        });
+    });
+
     // For button elements - not "<a>" elements - the code above is used with the data-post attribute and the "<a>" html element
     // boostrap can stuff up styling, so instread of overriding bootstrap css, add "<button>"s inside of a "<form>" tag and use a Get request with the form-submit class
     $(".form-submit button").on("click", function (e) {

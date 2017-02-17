@@ -104,5 +104,50 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 
             return RedirectToAction("index");
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Trash(int? id)
+        {
+            using(db = new MainDBContext())
+            {
+                var post = db.Posts.Find(id);
+                if (post == null)
+                    return HttpNotFound();
+
+                post.DeletedAt = DateTime.UtcNow;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Delete(int? id)
+        {
+            using (db = new MainDBContext())
+            {
+                var post = db.Posts.Find(id);
+                if (post == null)
+                    return HttpNotFound();
+
+                db.Posts.Remove(post);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Restore(int? id)
+        {
+            using (db = new MainDBContext())
+            {
+                var post = db.Posts.Find(id);
+                if (post == null)
+                    return HttpNotFound();
+
+                post.DeletedAt = null;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+        }
     }
 }
