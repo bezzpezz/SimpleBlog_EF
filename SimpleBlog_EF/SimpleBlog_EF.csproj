@@ -151,6 +151,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Posts.cs" />
     <Compile Include="Areas\Admin\ViewModels\Users.cs" />
     <Compile Include="Auth.cs" />
     <Compile Include="Controllers\Auth\AuthController.cs" />
@@ -166,6 +167,7 @@
     </Compile>
     <Compile Include="Infrastructure\CascadeDeleteAttribute.cs" />
     <Compile Include="Infrastructure\CascadeDeleteAttributeConvention.cs" />
+    <Compile Include="Infrastructure\PageData.cs" />
     <Compile Include="Infrastructure\RoleProvider.cs" />
     <Compile Include="Infrastructure\SelectedTabAttribute.cs" />
     <Compile Include="Models\DataBase\DBModels.cs" />
