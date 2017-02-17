@@ -36,9 +36,73 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
                 return View(new PostsIndex
                 {
                     Posts = new PageData<Post>(currentPostPage, totalPostsCount, page, postsPerPage)
-
                 });
             }
+        }
+
+        public ActionResult New()
+        {
+            return View("Form", new PostsForm {
+                IsNew = true
+            });
+        }
+
+        public ActionResult Edit(int id)
+        {
+            using(db = new MainDBContext())
+            {
+                var post = db.Posts.Find(id);
+
+                if (post == null)
+                    return HttpNotFound();
+
+                return View("Form", new PostsForm
+                {
+                    IsNew = false,
+                    PostId = id,
+                    Content = post.Content,
+                    Slug = post.Slug,
+                    Title = post.Title
+                });
+            }
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Form(PostsForm form)
+        {
+            form.IsNew = form.PostId == null;
+
+            if (!ModelState.IsValid)
+                return View(form);
+
+            Post post;
+            if (form.IsNew)
+            {
+                post = new Post
+                {
+                    CreatedAt = DateTime.UtcNow,
+                    User = Auth.User
+                };
+            }
+            else
+            {
+                using(db= new MainDBContext())
+                {
+                    post = db.Posts.Find(form.PostId);             
+
+                    if (post == null)
+                        return HttpNotFound();
+
+                    post.UpdatedAt = DateTime.UtcNow;
+                    post.Title = form.Title;
+                    post.Slug = form.Slug;
+                    post.Content = form.Content;
+
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("index");
         }
     }
 }

@@ -62,20 +62,20 @@
                 <td>@string.Join(", ", post.Tags.Select(t=>t.Name))</td>
                 <td>@post.CreatedAt</td>
                 <td>
-                    <a href="@Url.Action("edit", new { post.PostId})" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-edit"></i> edit
+                    <a href="@Url.Action("Edit", new { id = post.PostId })" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-edit"></i> Edit
                     </a>
 
                     @if (!post.IsDeleted)
                     {
                         <div class="btn btn-group">
-                            <a href="#" class=" = btn btn-danger">
+                            <a href="#" class=" = btn btn-warning">
                                 <i class="glyphicon glyphicon-remove"></i> Trash
                             </a>
                             <a href="#" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">
+                                    <a href="#" class="danger">
                                         <i class="glyphicon glyphicon-remove"></i> delete
                                     </a>
                                 </li>
@@ -94,9 +94,9 @@
         }
     </tbody>
 </table>
-<ul>
+@*<ul>
     @foreach(var item in Model.Posts)
     {
         <li>@item.Title</li>
     }
-</ul>
+</ul>*@
