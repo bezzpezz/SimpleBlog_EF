@@ -7,13 +7,13 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreateandSeed : IMigrationMetadata
+    public sealed partial class AlterPostsandtagstogetpivottable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreateandSeed));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AlterPostsandtagstogetpivottable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702021206236_Initial Create and Seed"; }
+            get { return "201702160638431_Alter Posts and tags to get pivot table"; }
         }
         
         string IMigrationMetadata.Source

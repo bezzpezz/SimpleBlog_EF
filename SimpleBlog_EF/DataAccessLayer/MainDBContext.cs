@@ -28,6 +28,9 @@ namespace SimpleBlog_EF.DataAccessLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,14 +43,36 @@ namespace SimpleBlog_EF.DataAccessLayer
             modelBuilder.Entity<Employee>()
              .HasOptional(e => e.Manager)
              .WithMany()
-             .HasForeignKey(m => m.ManagerId)
-             .WillCascadeOnDelete(true);
+             .HasForeignKey(m => m.ManagerId);
 
-            modelBuilder.Entity<Store>()
-             .HasRequired(e => e.Employee)
-             .WithMany()
-             .HasForeignKey(m => m.ManagerEmployeeId)
-             .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Store>()
+            // .HasOptional(e => e.Employees)
+            // .WithMany()
+            // .HasForeignKey(f=>f.)
+            // .WillCascadeOnDelete(false);
+
+            //Posts
+            //modelBuilder.Entity<Post>()
+            //.HasMany(u => u.Tags)
+            //.WithMany()
+            //.Map(m =>
+            //{
+            //    m.ToTable("Post_Tags");
+            //    m.MapLeftKey("PostId");
+            //    m.MapRightKey("Id");
+            //});
+
+            //Tags
+            //modelBuilder.Entity<Tag>()
+            //.HasMany(u => u.Posts)
+            //.WithMany()
+            //.Map(m =>
+            //{
+            //    m.ToTable("Post_Tags");
+            //    m.MapLeftKey("TagId");
+            //    m.MapRightKey("PostId");
+            //});
+
         }
     }
 }

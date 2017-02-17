@@ -3,7 +3,7 @@ namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialSeed : DbMigration
+    public partial class AppUserInitialCreateandSeed : DbMigration
     {
         public override void Up()
         {
@@ -20,16 +20,13 @@ namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
                 "AppUsers.User",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false, identity: true),
                         Username = c.String(nullable: false),
                         Email = c.String(nullable: false),
                         Avatar = c.String(),
                         PasswordHash = c.String(nullable: false),
-                        Role_RoleId = c.Int(),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("AppUsers.Role", t => t.Role_RoleId)
-                .Index(t => t.Role_RoleId);
+                .PrimaryKey(t => t.UserId);
             
             CreateTable(
                 "AppUsers.UserRoles",
@@ -48,12 +45,10 @@ namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
         
         public override void Down()
         {
-            DropForeignKey("AppUsers.User", "Role_RoleId", "AppUsers.Role");
             DropForeignKey("AppUsers.UserRoles", "RoleId", "AppUsers.Role");
             DropForeignKey("AppUsers.UserRoles", "UserId", "AppUsers.User");
             DropIndex("AppUsers.UserRoles", new[] { "RoleId" });
             DropIndex("AppUsers.UserRoles", new[] { "UserId" });
-            DropIndex("AppUsers.User", new[] { "Role_RoleId" });
             DropTable("AppUsers.UserRoles");
             DropTable("AppUsers.User");
             DropTable("AppUsers.Role");

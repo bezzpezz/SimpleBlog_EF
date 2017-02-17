@@ -114,7 +114,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 
                 SyncRoles(form.Roles, user.Roles);
 
-                if (db.Users.Any(u => u.Username == form.Username && u.Id != id))
+                if (db.Users.Any(u => u.Username == form.Username && u.UserId != id))
                     ModelState.AddModelError("Username", "Username must be unique!");
 
                 if (!ModelState.IsValid)

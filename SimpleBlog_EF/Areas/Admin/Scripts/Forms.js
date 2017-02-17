@@ -19,13 +19,6 @@
             .append(antiForgeryInput)
             .appendTo(document.body)
             .submit();
-
-        //$("<form> <button> type=submit")
-        //    .attr("method", "post")
-        //    .attr("action", $this.attr("href"))
-        //    .append(antiForgeryInput)
-        //    .appendTo(document.body)
-        //    .submit();
     });
 
     // For button elements - not "<a>" elements - the code above is used with the data-post attribute and the "<a>" html element
@@ -38,12 +31,26 @@
         var antiForgeryToken = $("#anti-forgery-form input");
         var antiForgeryInput = $("<input type='hidden'>").attr("name", antiForgeryToken.attr("name")).val(antiForgeryToken.val());
 
-        $("<form>")
-            .attr("method", "get")
-            .attr("action", $this.attr("formaction"))
-            .append(antiForgeryInput)
-            .appendTo(document.body)
-            .submit();
-    });
+        if ($this.attr('id') == "users-delete-btn") {
 
+            var message = $this.data("post");
+            if (message && !confirm(message))
+                return;
+
+            $("<form>")
+                .attr("method", "post")
+                .attr("action", $this.attr("formaction"))
+                .append(antiForgeryInput)
+                .appendTo(document.body)
+                .submit();
+        }
+        else {
+            $("<form>")
+                .attr("method", "get")
+                .attr("action", $this.attr("formaction"))
+                .append(antiForgeryInput)
+                .appendTo(document.body)
+                .submit();
+        }
+    });
 });

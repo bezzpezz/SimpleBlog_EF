@@ -9,6 +9,56 @@ namespace SimpleBlog_EF.Models.DataBase
     {
     }
 
+    public class Post
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int PostId { get; set; }
+
+        [Required]
+        public virtual User User { get; set; }
+        public virtual string Title { get; set; }
+        public virtual string Slug { get; set; }
+        public virtual string Content { get; set; }
+
+        public virtual DateTime CreatedAt { get; set; }
+        public virtual DateTime? UpdatedAt { get; set; }
+        public virtual DateTime? DeletedAt { get; set; }
+
+        public virtual bool IsDeleted { get { return DeletedAt != null; } }
+
+        //[ForeignKey("Tags")]
+        public virtual IList<Tag> Tags { get; set; }
+    }
+
+    public class Tag
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public virtual int TagId { get; set; }
+        public virtual string Slug { get; set; }
+        public virtual string Name { get; set; }
+
+        //[ForeignKey("Posts")]
+        public virtual IList<Post> Posts { get; set; }
+    }
+
+    public class Post_Tags
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [ForeignKey("PostId")]
+        public int PostId { get; set; }
+
+        [ForeignKey("TagId")]
+        public int TagId { get; set; }
+
+        public virtual Post Post { get; set; }
+        public virtual Tag Tag { get; set; }
+    }
+
     #region AppUserDB Schema
 
     public class User
@@ -23,7 +73,7 @@ namespace SimpleBlog_EF.Models.DataBase
 
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         public string Username { get; set; }
@@ -35,7 +85,7 @@ namespace SimpleBlog_EF.Models.DataBase
         [Required, DataType(DataType.Password)]
         public string PasswordHash { get; set; }
         
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual IList<Role> Roles { get; set; }
 
         public User()
         {
@@ -56,30 +106,36 @@ namespace SimpleBlog_EF.Models.DataBase
 
     public class Role
     {
+        //public Role()
+        //{
+            // Instatiate the Roles list here to avoid null references
+            //Users = new List<User>();
+        //}
+
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int RoleId { get; set; }
         public string Name { get; set; }
 
-        //public virtual ICollection<User> Users { get; set; }
-
+        //public virtual IList<User> Users { get; set; }
     }
 
-    public class UserRole
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+    //public class UserRole
+    //{
+    //    [Key]
+    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+    //    public int Id { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
+    //    [ForeignKey("User")]
+    //    public int UserId { get; set; }
 
-        [ForeignKey("Role")]
-        public int RoleId { get; set; }
+    //    [ForeignKey("Role")]
+    //    public int RoleId { get; set; }
 
-        public virtual User User { get; set; }
-        public virtual Role Role { get; set; }
-    }
+    //    public virtual User User { get; set; }
+    //    public virtual Role Role { get; set; }
+    //}
+
     #endregion
 
     #region MainDB Schema
@@ -130,8 +186,8 @@ namespace SimpleBlog_EF.Models.DataBase
             public string AddressLine1 { get; set; }
             public string AddressLine2 { get; set; }
 
-            [ForeignKey("City")]
-            public int CityId { get; set; }
+            //[ForeignKey("City")]
+            //public int CityId { get; set; }
 
             [MaxLength(10)]
             public string PostCode { get; set; }
@@ -149,9 +205,6 @@ namespace SimpleBlog_EF.Models.DataBase
             [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
             public int Id { get; set; }
             public string CityName { get; set; }
-
-            [ForeignKey("Country")]
-            public int CountryId { get; set; }
 
             public virtual Country Country { get; set; }
         }
@@ -206,9 +259,6 @@ namespace SimpleBlog_EF.Models.DataBase
             public string FirstName { get; set; }
             public string LastName { get; set; }
 
-            [ForeignKey("Store")]
-            public int StoreId { get; set; }
-
             [ForeignKey("Address")]
             public int AddressId { get; set; }
 
@@ -225,8 +275,6 @@ namespace SimpleBlog_EF.Models.DataBase
             public string Password { get; set; }
 
             public virtual Address Address { get; set; }
-
-            [ForeignKey("ManagerId")]
             public virtual Employee Manager { get; set; }
             public virtual Store Store { get; set; }
         }
@@ -235,17 +283,16 @@ namespace SimpleBlog_EF.Models.DataBase
         {
             [Key]
             [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-            public int StoreId { get; set; }
+            public int Id { get; set; }
 
-            [ForeignKey("Employee")] 
-            public int ManagerEmployeeId { get; set; }
+            //[ForeignKey("Employee")] 
+            //public int EmployeeId { get; set; }
 
             [ForeignKey("Address")]
             public int AddressId { get; set; }
-
             public DateTime LastUpdate { get; set; }
 
-            public virtual Employee Employee { get; set; }
+            public virtual IList<Employee> Employees { get; set; }
             public virtual Address Address { get; set; }
         }
 
@@ -360,7 +407,7 @@ namespace SimpleBlog_EF.Models.DataBase
             public float SellPriceInc { get; set; }
             public float SellPriceEx { get; set; }
 
-        [ForeignKey("Supplier")]
+            [ForeignKey("Supplier")]
             public int SupplierId { get; set; }
 
             [ForeignKey("ProductCategory")]
@@ -369,6 +416,17 @@ namespace SimpleBlog_EF.Models.DataBase
             public virtual Supplier Supplier { get; set; }
             public virtual ProductCategory ProductCategory { get; set; }
 
+        }  
+        
+        public class ProductCategory
+        {
+            [Key]
+            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int Id { get; set; }
+            
+            [Required]
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
 
         public class Supplier
@@ -392,20 +450,8 @@ namespace SimpleBlog_EF.Models.DataBase
 
             public virtual Address Address { get; set; }
         }
-        
-        
-        public class ProductCategory
-        {
-            [Key]
-            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int Id { get; set; }
-            
-            [Required]
-            public string Name { get; set; }
-            public string Description { get; set; }
-        }
 
-        #endregion
+    #endregion
 
     #endregion
 }

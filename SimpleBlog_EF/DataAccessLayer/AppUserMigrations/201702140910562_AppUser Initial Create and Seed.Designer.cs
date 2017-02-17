@@ -7,13 +7,13 @@ namespace SimpleBlog_EF.DataAccessLayer.AppUserMigrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class changedbacktheAppUserTable : IMigrationMetadata
+    public sealed partial class AppUserInitialCreateandSeed : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(changedbacktheAppUserTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AppUserInitialCreateandSeed));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702090735505_changed back the AppUserTable"; }
+            get { return "201702140910562_AppUser Initial Create and Seed"; }
         }
         
         string IMigrationMetadata.Source

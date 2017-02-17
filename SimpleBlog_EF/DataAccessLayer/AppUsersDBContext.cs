@@ -16,6 +16,7 @@ namespace SimpleBlog_EF.DataAccessLayer
         //DbSet initialization
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        //public DbSet<UserRole> UserRoles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,11 +26,22 @@ namespace SimpleBlog_EF.DataAccessLayer
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Roles)
                 .WithMany()
-                .Map(m => {
+                .Map(m =>
+                {
                     m.ToTable("UserRoles");
                     m.MapLeftKey("UserId");
                     m.MapRightKey("RoleId");
                 });
+
+            //modelBuilder.Entity<Role>()
+            //    .HasMany(u => u.Users)
+            //    .WithMany()
+            //    .Map(m =>
+            //    {
+            //        m.ToTable("UserRoles");
+            //        m.MapLeftKey("RoleId");
+            //        m.MapRightKey("UserId");
+            //    });
         }
     }
 }

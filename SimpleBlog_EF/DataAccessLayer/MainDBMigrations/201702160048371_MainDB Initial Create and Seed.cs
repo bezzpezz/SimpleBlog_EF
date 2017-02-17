@@ -3,7 +3,7 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreateandSeed : DbMigration
+    public partial class MainDBInitialCreateandSeed : DbMigration
     {
         public override void Up()
         {
@@ -14,15 +14,15 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                         Id = c.Int(nullable: false, identity: true),
                         AddressLine1 = c.String(),
                         AddressLine2 = c.String(),
-                        CityId = c.Int(nullable: false),
                         PostCode = c.String(maxLength: 10),
                         AddressTypeId = c.Int(nullable: false),
+                        City_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("MainDB.AddressType", t => t.AddressTypeId, cascadeDelete: true)
-                .ForeignKey("MainDB.City", t => t.CityId, cascadeDelete: true)
-                .Index(t => t.CityId)
-                .Index(t => t.AddressTypeId);
+                .ForeignKey("MainDB.City", t => t.City_Id)
+                .Index(t => t.AddressTypeId)
+                .Index(t => t.City_Id);
             
             CreateTable(
                 "MainDB.AddressType",
@@ -39,11 +39,11 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         CityName = c.String(),
-                        CountryId = c.Int(nullable: false),
+                        Country_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("MainDB.Country", t => t.CountryId, cascadeDelete: true)
-                .Index(t => t.CountryId);
+                .ForeignKey("MainDB.Country", t => t.Country_Id)
+                .Index(t => t.Country_Id);
             
             CreateTable(
                 "MainDB.Country",
@@ -92,10 +92,10 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                         ManagerId = c.Int(),
                         FirstName = c.String(),
                         LastName = c.String(),
+                        AddressId = c.Int(nullable: false),
                         Email = c.String(),
                         DateOfBirth = c.DateTime(),
                         Active = c.Boolean(nullable: false),
-                        AddressId = c.Int(nullable: false),
                         Avatar = c.String(),
                         DateOfCommenceWork = c.DateTime(),
                         DateOfLeaveWork = c.DateTime(),
@@ -103,11 +103,26 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                         LastUpdate = c.DateTime(),
                         Username = c.String(),
                         Password = c.String(),
+                        Store_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("MainDB.Address", t => t.AddressId, cascadeDelete: true)
                 .ForeignKey("MainDB.Employee", t => t.ManagerId)
+                .ForeignKey("MainDB.Store", t => t.Store_Id)
                 .Index(t => t.ManagerId)
+                .Index(t => t.AddressId)
+                .Index(t => t.Store_Id);
+            
+            CreateTable(
+                "MainDB.Store",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        AddressId = c.Int(nullable: false),
+                        LastUpdate = c.DateTime(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("MainDB.Address", t => t.AddressId, cascadeDelete: true)
                 .Index(t => t.AddressId);
             
             CreateTable(
@@ -237,26 +252,77 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "MainDB.Store",
+                "MainDB.Post",
                 c => new
                     {
-                        StoreId = c.Int(nullable: false, identity: true),
-                        ManagerEmployeeId = c.Int(nullable: false),
-                        AddressId = c.Int(nullable: false),
-                        LastUpdate = c.DateTime(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        Slug = c.String(),
+                        Content = c.String(),
+                        CreatedAt = c.DateTime(nullable: false),
+                        UpdatedAt = c.DateTime(),
+                        DeletedAt = c.DateTime(),
+                        User_UserId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.StoreId)
-                .ForeignKey("MainDB.Address", t => t.AddressId, cascadeDelete: true)
-                .ForeignKey("MainDB.Employee", t => t.ManagerEmployeeId, cascadeDelete: false)
-                .Index(t => t.ManagerEmployeeId)
-                .Index(t => t.AddressId);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("MainDB.User", t => t.User_UserId, cascadeDelete: true)
+                .Index(t => t.User_UserId);
+            
+            CreateTable(
+                "MainDB.Tag",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Slug = c.String(),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "MainDB.User",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false, identity: true),
+                        Username = c.String(nullable: false),
+                        Email = c.String(nullable: false),
+                        Avatar = c.String(),
+                        PasswordHash = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.UserId);
+            
+            CreateTable(
+                "MainDB.Role",
+                c => new
+                    {
+                        RoleId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        User_UserId = c.Int(),
+                    })
+                .PrimaryKey(t => t.RoleId)
+                .ForeignKey("MainDB.User", t => t.User_UserId)
+                .Index(t => t.User_UserId);
+            
+            CreateTable(
+                "MainDB.TagPost",
+                c => new
+                    {
+                        Tag_Id = c.Int(nullable: false),
+                        Post_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
+                .ForeignKey("MainDB.Tag", t => t.Tag_Id, cascadeDelete: true)
+                .ForeignKey("MainDB.Post", t => t.Post_Id, cascadeDelete: true)
+                .Index(t => t.Tag_Id)
+                .Index(t => t.Post_Id);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("MainDB.Store", "ManagerEmployeeId", "MainDB.Employee");
-            DropForeignKey("MainDB.Store", "AddressId", "MainDB.Address");
+            DropForeignKey("MainDB.Post", "User_UserId", "MainDB.User");
+            DropForeignKey("MainDB.Role", "User_UserId", "MainDB.User");
+            DropForeignKey("MainDB.TagPost", "Post_Id", "MainDB.Post");
+            DropForeignKey("MainDB.TagPost", "Tag_Id", "MainDB.Tag");
             DropForeignKey("MainDB.Payment", "PaymentTypeId", "MainDB.PaymentType");
             DropForeignKey("MainDB.Payment", "EmployeeId", "MainDB.Employee");
             DropForeignKey("MainDB.Payment", "CustomerId", "MainDB.Customer");
@@ -266,14 +332,18 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
             DropForeignKey("MainDB.Product", "ProductCategoryId", "MainDB.ProductCategory");
             DropForeignKey("MainDB.JobOrderDetails", "JobOrderId", "MainDB.JobOrder");
             DropForeignKey("MainDB.JobOrder", "CustomerId", "MainDB.Customer");
+            DropForeignKey("MainDB.Employee", "Store_Id", "MainDB.Store");
+            DropForeignKey("MainDB.Store", "AddressId", "MainDB.Address");
             DropForeignKey("MainDB.Employee", "ManagerId", "MainDB.Employee");
             DropForeignKey("MainDB.Employee", "AddressId", "MainDB.Address");
             DropForeignKey("MainDB.Customer", "CustomerTypeId", "MainDB.CustomerType");
-            DropForeignKey("MainDB.Address", "CityId", "MainDB.City");
-            DropForeignKey("MainDB.City", "CountryId", "MainDB.Country");
+            DropForeignKey("MainDB.Address", "City_Id", "MainDB.City");
+            DropForeignKey("MainDB.City", "Country_Id", "MainDB.Country");
             DropForeignKey("MainDB.Address", "AddressTypeId", "MainDB.AddressType");
-            DropIndex("MainDB.Store", new[] { "AddressId" });
-            DropIndex("MainDB.Store", new[] { "ManagerEmployeeId" });
+            DropIndex("MainDB.TagPost", new[] { "Post_Id" });
+            DropIndex("MainDB.TagPost", new[] { "Tag_Id" });
+            DropIndex("MainDB.Role", new[] { "User_UserId" });
+            DropIndex("MainDB.Post", new[] { "User_UserId" });
             DropIndex("MainDB.Payment", new[] { "PaymentTypeId" });
             DropIndex("MainDB.Payment", new[] { "EmployeeId" });
             DropIndex("MainDB.Payment", new[] { "CustomerId" });
@@ -283,13 +353,19 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
             DropIndex("MainDB.JobOrder", new[] { "CustomerId" });
             DropIndex("MainDB.JobOrderDetails", new[] { "ProductId" });
             DropIndex("MainDB.JobOrderDetails", new[] { "JobOrderId" });
+            DropIndex("MainDB.Store", new[] { "AddressId" });
+            DropIndex("MainDB.Employee", new[] { "Store_Id" });
             DropIndex("MainDB.Employee", new[] { "AddressId" });
             DropIndex("MainDB.Employee", new[] { "ManagerId" });
             DropIndex("MainDB.Customer", new[] { "CustomerTypeId" });
-            DropIndex("MainDB.City", new[] { "CountryId" });
+            DropIndex("MainDB.City", new[] { "Country_Id" });
+            DropIndex("MainDB.Address", new[] { "City_Id" });
             DropIndex("MainDB.Address", new[] { "AddressTypeId" });
-            DropIndex("MainDB.Address", new[] { "CityId" });
-            DropTable("MainDB.Store");
+            DropTable("MainDB.TagPost");
+            DropTable("MainDB.Role");
+            DropTable("MainDB.User");
+            DropTable("MainDB.Tag");
+            DropTable("MainDB.Post");
             DropTable("MainDB.PaymentType");
             DropTable("MainDB.Payment");
             DropTable("MainDB.Supplier");
@@ -297,6 +373,7 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
             DropTable("MainDB.Product");
             DropTable("MainDB.JobOrder");
             DropTable("MainDB.JobOrderDetails");
+            DropTable("MainDB.Store");
             DropTable("MainDB.Employee");
             DropTable("MainDB.CustomerType");
             DropTable("MainDB.Customer");
