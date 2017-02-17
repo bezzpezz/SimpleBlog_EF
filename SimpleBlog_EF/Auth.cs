@@ -31,7 +31,6 @@ namespace SimpleBlog_EF
                         return null;
 
                     HttpContext.Current.Items[UserKey] = user;
-
                 }
 
                 return user;

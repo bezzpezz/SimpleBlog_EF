@@ -28,6 +28,11 @@ namespace SimpleBlog_EF.Models.DataBase
 
         public virtual bool IsDeleted { get { return DeletedAt != null; } }
 
+        public Post()
+        {
+            Tags = new List<Tag>();
+        }
+
         //[ForeignKey("Tags")]
         public virtual IList<Tag> Tags { get; set; }
         public virtual User User { get; set; }
@@ -40,6 +45,11 @@ namespace SimpleBlog_EF.Models.DataBase
         public virtual int TagId { get; set; }
         public virtual string Slug { get; set; }
         public virtual string Name { get; set; }
+
+        public Tag()
+        {
+            Posts = new List<Post>();
+        }
 
         //[ForeignKey("Posts")]
         public virtual IList<Post> Posts { get; set; }

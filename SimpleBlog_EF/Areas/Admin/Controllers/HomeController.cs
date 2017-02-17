@@ -1,6 +1,7 @@
 ﻿using SimpleBlog_EF.Areas.Admin.ViewModels;
 using SimpleBlog_EF.DataAccessLayer;
 using SimpleBlog_EF.Infrastructure;
+using SimpleBlog_EF.Infrastructure.Extensions;
 using SimpleBlog_EF.Models.DataBase;
 using System;
 using System.Collections.Generic;
@@ -42,14 +43,24 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            return View("Form", new PostsForm {
-                IsNew = true
-            });
+            using (db = new MainDBContext())
+            {
+                return View("Form", new PostsForm
+                {
+                    IsNew = true,
+                    Tags = db.Tags.ToList().Select(tag => new TagCheckBox
+                    {
+                        Id = tag.TagId,
+                        Name = tag.Name,
+                        IsChecked = false
+                    }).ToList()
+                });
+            }
         }
 
         public ActionResult Edit(int id)
         {
-            using(db = new MainDBContext())
+            using (db = new MainDBContext())
             {
                 var post = db.Posts.Find(id);
 
@@ -62,7 +73,13 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
                     PostId = id,
                     Content = post.Content,
                     Slug = post.Slug,
-                    Title = post.Title
+                    Title = post.Title,
+                    Tags = db.Tags.ToList().Select(tag => new TagCheckBox
+                    {
+                        Id = tag.TagId,
+                        Name = tag.Name,
+                        IsChecked = post.Tags.Contains(tag)
+                    }).ToList()
                 });
             }
         }
@@ -75,40 +92,83 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
             if (!ModelState.IsValid)
                 return View(form);
 
-            Post post;
-            if (form.IsNew)
+            using (db = new MainDBContext())
             {
-                post = new Post
+                var selectedTags = ReconsileTags(form.Tags).ToList();
+
+                var post = new Post();
+                if (form.IsNew)
                 {
-                    CreatedAt = DateTime.UtcNow,
-                    User = Auth.User
-                };
-            }
-            else
-            {
-                using(db= new MainDBContext())
+                    post.CreatedAt = DateTime.UtcNow;
+                    post.User = db.Users
+                        .FirstOrDefault(u => u.Username == System.Web.HttpContext.Current.User.Identity.Name);
+
+                    foreach (var tag in selectedTags)
+                    {
+                        post.Tags.Add(tag);
+                    };
+
+                    db.Posts.Add(post);
+                }
+                else
                 {
-                    post = db.Posts.Find(form.PostId);             
+                    post = db.Posts.Find(form.PostId);
 
                     if (post == null)
                         return HttpNotFound();
 
                     post.UpdatedAt = DateTime.UtcNow;
-                    post.Title = form.Title;
-                    post.Slug = form.Slug;
-                    post.Content = form.Content;
 
-                    db.SaveChanges();
+                    foreach (var toAdd in selectedTags.Where(t => !post.Tags.Contains(t)))
+                        post.Tags.Add(toAdd);
+
+                    foreach (var toRemove in post.Tags.Where(t => !selectedTags.Contains(t)).ToList())
+                        post.Tags.Remove(toRemove);
                 }
-            }
 
-            return RedirectToAction("index");
+
+                post.Title = form.Title;
+                post.Slug = form.Slug;
+                post.Content = form.Content;
+                db.SaveChanges();
+
+                return RedirectToAction("index");
+            }
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult NewPost(PostsForm form)
+        {
+            using (db = new MainDBContext())
+            {
+                var post = new Post();
+                var user = db.Users.Find(1);
+                var selectedTags = ReconsileTags(form.Tags).ToList();
+
+                if (!ModelState.IsValid)
+                {
+                    return View(form);
+                };
+
+                post.CreatedAt = DateTime.UtcNow;
+                post.User = db.Users.ToList()
+                        .FirstOrDefault(u => u.Username == System.Web.HttpContext.Current.User.Identity.Name);
+
+                foreach (var tag in selectedTags)
+                {
+                    post.Tags.Add(tag);
+                };
+
+                db.Posts.Add(post);
+                db.SaveChanges();
+                return RedirectToAction("index");
+            }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Trash(int? id)
         {
-            using(db = new MainDBContext())
+            using (db = new MainDBContext())
             {
                 var post = db.Posts.Find(id);
                 if (post == null)
@@ -147,6 +207,35 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
                 post.DeletedAt = null;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+        }
+
+        private IEnumerable<Tag> ReconsileTags(IEnumerable<TagCheckBox> tags)
+        {
+            foreach (var tag in tags.Where(t => t.IsChecked))
+            {
+                if (tag.Id != null)
+                {
+                    yield return db.Tags.Find(tag.Id);
+                    continue;
+                }
+
+                var existingTag = db.Tags.FirstOrDefault(t => t.Name == tag.Name);
+                if (existingTag != null)
+                {
+                    yield return existingTag;
+                    continue;
+                }
+
+                var newTag = new Tag
+                {
+                    Name = tag.Name,
+                    Slug = tag.Name.Slugify()
+                };
+
+                db.Tags.Add(newTag);
+
+                yield return newTag;
             }
         }
     }
