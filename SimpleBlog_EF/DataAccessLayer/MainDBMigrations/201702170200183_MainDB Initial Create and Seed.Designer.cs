@@ -13,7 +13,7 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201702160048371_MainDB Initial Create and Seed"; }
+            get { return "201702170200183_MainDB Initial Create and Seed"; }
         }
         
         string IMigrationMetadata.Source

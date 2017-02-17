@@ -15,8 +15,9 @@ namespace SimpleBlog_EF.Models.DataBase
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int PostId { get; set; }
 
-        [Required]
-        public virtual User User { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
         public virtual string Title { get; set; }
         public virtual string Slug { get; set; }
         public virtual string Content { get; set; }
@@ -29,6 +30,7 @@ namespace SimpleBlog_EF.Models.DataBase
 
         //[ForeignKey("Tags")]
         public virtual IList<Tag> Tags { get; set; }
+        public virtual User User { get; set; }
     }
 
     public class Tag

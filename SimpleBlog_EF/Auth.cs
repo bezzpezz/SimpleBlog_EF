@@ -10,7 +10,7 @@ namespace SimpleBlog_EF
     public class Auth
     {
         private const string UserKey = "SimpleBlog.Auth.UserKey";
-        private static AppUsersDBContext db;
+        private static MainDBContext db;
 
         public static User User
         {
@@ -22,7 +22,7 @@ namespace SimpleBlog_EF
                 var user = HttpContext.Current.Items[UserKey] as User;
                 if(user == null)
                 {
-                    db = new AppUsersDBContext();
+                    db = new MainDBContext();
                                     
                     user = db.Users.Include("Roles").ToList()
                         .FirstOrDefault(u => u.Username == HttpContext.Current.User.Identity.Name);

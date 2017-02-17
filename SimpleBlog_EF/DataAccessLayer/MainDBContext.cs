@@ -28,8 +28,11 @@ namespace SimpleBlog_EF.DataAccessLayer
         public DbSet<Product> Products { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -41,37 +44,20 @@ namespace SimpleBlog_EF.DataAccessLayer
             //modelBuilder.Conventions.Add<CascadeDeleteAttributeConvention>();
 
             modelBuilder.Entity<Employee>()
-             .HasOptional(e => e.Manager)
-             .WithMany()
-             .HasForeignKey(m => m.ManagerId);
+                .HasOptional(e => e.Manager)
+                .WithMany()
+                .HasForeignKey(m => m.ManagerId);
 
-            //modelBuilder.Entity<Store>()
-            // .HasOptional(e => e.Employees)
-            // .WithMany()
-            // .HasForeignKey(f=>f.)
-            // .WillCascadeOnDelete(false);
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Roles)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("UserRoles");
+                    m.MapLeftKey("UserId");
+                    m.MapRightKey("RoleId");
+                });
 
-            //Posts
-            //modelBuilder.Entity<Post>()
-            //.HasMany(u => u.Tags)
-            //.WithMany()
-            //.Map(m =>
-            //{
-            //    m.ToTable("Post_Tags");
-            //    m.MapLeftKey("PostId");
-            //    m.MapRightKey("Id");
-            //});
-
-            //Tags
-            //modelBuilder.Entity<Tag>()
-            //.HasMany(u => u.Posts)
-            //.WithMany()
-            //.Map(m =>
-            //{
-            //    m.ToTable("Post_Tags");
-            //    m.MapLeftKey("TagId");
-            //    m.MapRightKey("PostId");
-            //});
 
         }
     }

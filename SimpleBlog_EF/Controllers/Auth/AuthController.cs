@@ -8,7 +8,7 @@ namespace SimpleBlog_EF.Controllers.Auth
 {
     public class AuthController : Controller
     {
-        private AppUsersDBContext db;
+        private MainDBContext db;
 
         // GET: Auth
         public ActionResult Login()
@@ -29,7 +29,7 @@ namespace SimpleBlog_EF.Controllers.Auth
             if (!ModelState.IsValid)
                 return View(form);
 
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Username == form.Username);
 

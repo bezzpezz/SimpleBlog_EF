@@ -255,28 +255,28 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                 "MainDB.Post",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        PostId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
                         Title = c.String(),
                         Slug = c.String(),
                         Content = c.String(),
                         CreatedAt = c.DateTime(nullable: false),
                         UpdatedAt = c.DateTime(),
                         DeletedAt = c.DateTime(),
-                        User_UserId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("MainDB.User", t => t.User_UserId, cascadeDelete: true)
-                .Index(t => t.User_UserId);
+                .PrimaryKey(t => t.PostId)
+                .ForeignKey("MainDB.User", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "MainDB.Tag",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        TagId = c.Int(nullable: false, identity: true),
                         Slug = c.String(),
                         Name = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.TagId);
             
             CreateTable(
                 "MainDB.User",
@@ -296,33 +296,44 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
                     {
                         RoleId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        User_UserId = c.Int(),
                     })
-                .PrimaryKey(t => t.RoleId)
-                .ForeignKey("MainDB.User", t => t.User_UserId)
-                .Index(t => t.User_UserId);
+                .PrimaryKey(t => t.RoleId);
             
             CreateTable(
                 "MainDB.TagPost",
                 c => new
                     {
-                        Tag_Id = c.Int(nullable: false),
-                        Post_Id = c.Int(nullable: false),
+                        Tag_TagId = c.Int(nullable: false),
+                        Post_PostId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Tag_Id, t.Post_Id })
-                .ForeignKey("MainDB.Tag", t => t.Tag_Id, cascadeDelete: true)
-                .ForeignKey("MainDB.Post", t => t.Post_Id, cascadeDelete: true)
-                .Index(t => t.Tag_Id)
-                .Index(t => t.Post_Id);
+                .PrimaryKey(t => new { t.Tag_TagId, t.Post_PostId })
+                .ForeignKey("MainDB.Tag", t => t.Tag_TagId, cascadeDelete: true)
+                .ForeignKey("MainDB.Post", t => t.Post_PostId, cascadeDelete: true)
+                .Index(t => t.Tag_TagId)
+                .Index(t => t.Post_PostId);
+            
+            CreateTable(
+                "MainDB.UserRoles",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("MainDB.User", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("MainDB.Role", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("MainDB.Post", "User_UserId", "MainDB.User");
-            DropForeignKey("MainDB.Role", "User_UserId", "MainDB.User");
-            DropForeignKey("MainDB.TagPost", "Post_Id", "MainDB.Post");
-            DropForeignKey("MainDB.TagPost", "Tag_Id", "MainDB.Tag");
+            DropForeignKey("MainDB.Post", "UserId", "MainDB.User");
+            DropForeignKey("MainDB.UserRoles", "RoleId", "MainDB.Role");
+            DropForeignKey("MainDB.UserRoles", "UserId", "MainDB.User");
+            DropForeignKey("MainDB.TagPost", "Post_PostId", "MainDB.Post");
+            DropForeignKey("MainDB.TagPost", "Tag_TagId", "MainDB.Tag");
             DropForeignKey("MainDB.Payment", "PaymentTypeId", "MainDB.PaymentType");
             DropForeignKey("MainDB.Payment", "EmployeeId", "MainDB.Employee");
             DropForeignKey("MainDB.Payment", "CustomerId", "MainDB.Customer");
@@ -340,10 +351,11 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
             DropForeignKey("MainDB.Address", "City_Id", "MainDB.City");
             DropForeignKey("MainDB.City", "Country_Id", "MainDB.Country");
             DropForeignKey("MainDB.Address", "AddressTypeId", "MainDB.AddressType");
-            DropIndex("MainDB.TagPost", new[] { "Post_Id" });
-            DropIndex("MainDB.TagPost", new[] { "Tag_Id" });
-            DropIndex("MainDB.Role", new[] { "User_UserId" });
-            DropIndex("MainDB.Post", new[] { "User_UserId" });
+            DropIndex("MainDB.UserRoles", new[] { "RoleId" });
+            DropIndex("MainDB.UserRoles", new[] { "UserId" });
+            DropIndex("MainDB.TagPost", new[] { "Post_PostId" });
+            DropIndex("MainDB.TagPost", new[] { "Tag_TagId" });
+            DropIndex("MainDB.Post", new[] { "UserId" });
             DropIndex("MainDB.Payment", new[] { "PaymentTypeId" });
             DropIndex("MainDB.Payment", new[] { "EmployeeId" });
             DropIndex("MainDB.Payment", new[] { "CustomerId" });
@@ -361,6 +373,7 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
             DropIndex("MainDB.City", new[] { "Country_Id" });
             DropIndex("MainDB.Address", new[] { "City_Id" });
             DropIndex("MainDB.Address", new[] { "AddressTypeId" });
+            DropTable("MainDB.UserRoles");
             DropTable("MainDB.TagPost");
             DropTable("MainDB.Role");
             DropTable("MainDB.User");

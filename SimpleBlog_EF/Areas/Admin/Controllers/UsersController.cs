@@ -15,11 +15,11 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         //Global DB Context
-        private AppUsersDBContext db;
+        private MainDBContext db;
         // GET: Admin/Users
         public ActionResult Index()
         {
-            using (var db = new AppUsersDBContext())
+            using (var db = new MainDBContext())
             {
                 var ui = new UsersIndex
                 {
@@ -32,7 +32,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 
         public ActionResult New()
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 return View(new UsersNew
                 {
@@ -49,7 +49,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult New(UsersNew form)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = new User();
                 SyncRoles(form.Roles, user.Roles);
@@ -76,7 +76,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 
         public ActionResult Edit(int id)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.Find(id);
 
@@ -106,7 +106,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Edit(int id, UsersEdit form)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.Find(id);
                 if (user == null)
@@ -131,7 +131,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         //Get
         public ActionResult ResetPassword(int id)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.Find(id);
                 if (user == null)
@@ -147,7 +147,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult ResetPassword(int id, UsersResetPassword form)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.Find(id);
                 if (user == null)
@@ -168,7 +168,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            using (db = new AppUsersDBContext())
+            using (db = new MainDBContext())
             {
                 var user = db.Users.Find(id);
                 if (user == null)
@@ -186,7 +186,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
         {
             var selectedRoles = new List<Role>();
 
-            //using (db = new AppUsersDBContext())
+            //using (db = new MainDBContext())
             //{
             foreach (var role in db.Roles)
             {

@@ -16,6 +16,34 @@ namespace SimpleBlog_EF.DataAccessLayer.MainDBMigrations
 
         protected override void Seed(SimpleBlog_EF.DataAccessLayer.MainDBContext context)
         {
+            #region AppUser Creation
+            if (!context.Users.Any())
+            {
+                context.Roles.AddOrUpdate(
+                    new Role() { Name = "user" },
+                    new Role() { Name = "editor" },
+                    new Role() { Name = "admin" }
+                );
+
+                context.Users.AddOrUpdate(//user => user.UserId,
+                    new User()
+                    {
+                        Username = "Beren",
+                        Email = "berenlyell@hotmail.com",
+                        PasswordHash = "$2a$13$LEyYCZqiAdkLdnz.nrDFyuoV/k.jsj.g5T0XPjCG.Ifu8vAD4djgy"
+                    },
+                    new User()
+                    {
+                        Username = "Steve",
+                        Email = "steve@test.com",
+                        PasswordHash = "$2a$13$LEyYCZqiAdkLdnz.nrDFyuoV/k.jsj.g5T0XPjCG.Ifu8vAD4djgy",
+
+                    }
+                );
+            }
+            #endregion
+
+
             #region Lookup table data / types addition
             context.AddresseTypes.AddOrUpdate(
             new AddressType() { Desc = "Postal" },

@@ -11,7 +11,7 @@ namespace SimpleBlog_EF.Infrastructure
     public class RoleProvider : System.Web.Security.RoleProvider
     {
         //Global DB Context
-        private AppUsersDBContext db;
+        private MainDBContext db;
 
         public override string[] GetRolesForUser(string username)
         {

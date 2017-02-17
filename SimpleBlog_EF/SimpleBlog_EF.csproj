@@ -155,23 +155,12 @@
     <Compile Include="Auth.cs" />
     <Compile Include="Controllers\Auth\AuthController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702140910562_AppUser Initial Create and Seed.cs" />
-    <Compile Include="DataAccessLayer\AppUserMigrations\201702140910562_AppUser Initial Create and Seed.Designer.cs">
-      <DependentUpon>201702140910562_AppUser Initial Create and Seed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\AppUserMigrations\Configuration.cs" />
-    <Compile Include="DataAccessLayer\AppUsersDBContext.cs" />
     <Compile Include="DataAccessLayer\MainDBContext.cs" />
-    <Compile Include="DataAccessLayer\MainDBMigrations\201702160048371_MainDB Initial Create and Seed.cs" />
-    <Compile Include="DataAccessLayer\MainDBMigrations\201702160048371_MainDB Initial Create and Seed.Designer.cs">
-      <DependentUpon>201702160048371_MainDB Initial Create and Seed.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccessLayer\MainDBMigrations\201702160638431_Alter Posts and tags to get pivot table.cs" />
-    <Compile Include="DataAccessLayer\MainDBMigrations\201702160638431_Alter Posts and tags to get pivot table.Designer.cs">
-      <DependentUpon>201702160638431_Alter Posts and tags to get pivot table.cs</DependentUpon>
+    <Compile Include="DataAccessLayer\MainDBMigrations\201702170200183_MainDB Initial Create and Seed.cs" />
+    <Compile Include="DataAccessLayer\MainDBMigrations\201702170200183_MainDB Initial Create and Seed.Designer.cs">
+      <DependentUpon>201702170200183_MainDB Initial Create and Seed.cs</DependentUpon>
     </Compile>
     <Compile Include="DataAccessLayer\MainDBMigrations\Configuration.cs" />
-    <Compile Include="DataAccessLayer\SimpleBlog_EF_DBContext_Initializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -206,19 +195,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="DataAccessLayer\AppUserMigrations\" />
     <Folder Include="OmittedCode\AppUser DB\" />
     <Folder Include="OmittedCode\MainDB\" />
     <Folder Include="Tools\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DataAccessLayer\AppUserMigrations\201702140910562_AppUser Initial Create and Seed.resx">
-      <DependentUpon>201702140910562_AppUser Initial Create and Seed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702160048371_MainDB Initial Create and Seed.resx">
-      <DependentUpon>201702160048371_MainDB Initial Create and Seed.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702160638431_Alter Posts and tags to get pivot table.resx">
-      <DependentUpon>201702160638431_Alter Posts and tags to get pivot table.cs</DependentUpon>
+    <EmbeddedResource Include="DataAccessLayer\MainDBMigrations\201702170200183_MainDB Initial Create and Seed.resx">
+      <DependentUpon>201702170200183_MainDB Initial Create and Seed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

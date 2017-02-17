@@ -23,7 +23,7 @@
         <div class="container">
             <ul class="nav nav-pills">
                 <li class="@SelectedTabClass("home")">
-                    @Html.ActionLink("Home", "Index", "Home", new { area = "admin" }, new { })
+                    @Html.ActionLink("Posts", "Index", "Home", new { area = "admin" }, new { })
                 </li>
                 <li class="@SelectedTabClass("users")">
                     @Html.ActionLink("Users", "Index", "Users", new { area = "admin" }, new { })
@@ -32,7 +32,6 @@
                     @Html.RouteLink("Back To Website", "Home")
                 </li>
             </ul>
-
 
             @RenderBody()
         </div>
