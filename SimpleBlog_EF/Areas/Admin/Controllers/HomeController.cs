@@ -16,7 +16,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private MainDBContext db;
-        private const int postsPerPage = 3;
+        private const int postsPerPage = 5;
 
         // GET: Admin/Home
         public ActionResult Index(int page = 1)

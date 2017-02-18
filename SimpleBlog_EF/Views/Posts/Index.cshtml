@@ -1,0 +1,7 @@
+﻿@model SimpleBlog_EF.ViewModels.PostsIndex
+@{
+    ViewBag.Title = "Posts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_Posts", Model.Posts)

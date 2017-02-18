@@ -1,4 +1,4 @@
-﻿using SimpleBlog_EF.Controllers.Home;
+﻿using SimpleBlog_EF.Controllers.Posts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,37 @@ namespace SimpleBlog_EF
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            var namespaces = new[] { typeof(HomeController).Namespace };
+            var namespaces = new[] { typeof(PostsController).Namespace };
+
+            //routes.MapRoute("Tag", "tag/{id}-{slug}", new { Controller = "Home", action = "Tag"}, namespaces);
+
+            //routes.MapRoute("PostForRealTHisTime", "post/{idAndslug}", new { Controller = "Posts", action = "Show" }, namespaces);
+            //routes.MapRoute("Post", "post/{id}-{slug}", new { Controller = "Home", action = "Show" }, namespaces);
+            routes.MapRoute(
+                name: "TagForRealThisTime",
+                url: "tag/{idAndSlug}",
+                defaults: new { controller = "Posts", action = "Tag"},
+                namespaces: namespaces
+                );
+            routes.MapRoute(
+                name: "Tag",
+                url: "tag/{id}-{slug}",
+                defaults: new { controller = "Posts", action = "Tag" },
+                namespaces: namespaces
+            );
+
+            routes.MapRoute(
+                name: "PostForRealThisTime",
+                url: "post/{idAndSlug}",
+                defaults: new { controller = "Posts", action = "Show" },
+                namespaces: namespaces
+            );
+            routes.MapRoute(
+                name: "Post",
+                url: "post/{id}-{slug}",
+                defaults: new { controller = "Posts", action = "Show" },
+                namespaces: namespaces
+            );
 
             // Login
             routes.MapRoute(
@@ -34,7 +64,7 @@ namespace SimpleBlog_EF
             routes.MapRoute(
                 name: "Home",
                 url: "",
-                defaults: new { controller = "Home", action = "Index" },
+                defaults: new { controller = "Posts", action = "Index" },
                 namespaces: namespaces
             );
 

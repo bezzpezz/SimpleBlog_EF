@@ -1,0 +1,28 @@
+﻿@model SimpleBlog_EF.Infrastructure.PageData<SimpleBlog_EF.Models.DataBase.Post>
+
+@foreach (var post in Model)
+{
+    @Html.Partial("_Post", post)
+}
+
+<ul class="list-unstyled">
+    @if (Model.HasPreviousPage)
+    {
+        <li class=" pull-left">
+            <a href="@Url.Action(null, new { page = Model.PreviousPage})" class="btn btn-primary">
+                <i class="glyphicon glyphicon-adjust glyphicon-chevron-left"></i>
+                Older Posts
+            </a>
+        </li>
+    }
+
+    @if (Model.HasNextPage)
+    {
+        <li class=" pull-right">
+            <a href="@Url.Action(null, new { page = Model.NextPage})" class="btn btn-primary">
+                Newer Posts
+                <i class="glyphicon glyphicon-adjust glyphicon-chevron-right"></i>
+            </a>
+        </li>
+    }
+</ul>

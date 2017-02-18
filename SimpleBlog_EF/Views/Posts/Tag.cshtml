@@ -1,0 +1,15 @@
+﻿@model SimpleBlog_EF.ViewModels.PostsTag
+
+@{ 
+    ViewBag.Title = Model.Tag.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        Showing Posts taged with <strong>@Model.Tag.Name</strong>
+        <a href="@Url.RouteUrl("Home")" class="pull-right">Show All</a>
+    </div>
+</div>
+
+@Html.Partial("_Posts", Model.Posts)
