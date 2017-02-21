@@ -2,7 +2,7 @@
 
 <h1>@(Model.IsNew ? "Create Post" : "Update Post")</h1>
 
-@using (Html.BeginForm("Form", "Home"))
+@using (Html.BeginForm("Form", "Posts"))
 {
     if (!Model.IsNew)
     {

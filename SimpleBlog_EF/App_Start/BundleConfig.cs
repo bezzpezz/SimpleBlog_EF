@@ -23,7 +23,7 @@ namespace SimpleBlog_EF.App_Start
                 .Include("~/scripts/Jquery-3.1.1.js")
                 .Include("~/scripts/jquery.validate.js")
                 .Include("~/scripts/jquery.validate.unobtrusive.js")
-                .Include("~/scripts/bootstrap.js")
+                .Include("~/scripts/bootstrap.js")           
                 .Include("~/areas/admin/scripts/forms.js")
                 .Include("~/areas/admin/scripts/posteditor.js"));
 
@@ -32,9 +32,12 @@ namespace SimpleBlog_EF.App_Start
 
             bundles.Add(new ScriptBundle("~/scripts")
                 .Include("~/scripts/Jquery-3.1.1.js")
+                .Include("~/scripts/jquery.timeago.js")
                 .Include("~/scripts/jquery.validate.js")
                 .Include("~/scripts/jquery.validate.unobtrusive.js")
-                .Include("~/scripts/bootstrap.js"));
+                .Include("~/scripts/bootstrap.js")
+                .Include("~/scripts/auth.js")
+                .Include("~/scripts/frontend.js"));
         }
     }
 }

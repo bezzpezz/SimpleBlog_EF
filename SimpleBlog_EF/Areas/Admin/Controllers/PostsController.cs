@@ -13,7 +13,7 @@ namespace SimpleBlog_EF.Areas.Admin.Controllers
 {
     [Authorize(Roles = "admin")]
     [SelectedTab("home")]
-    public class HomeController : Controller
+    public class PostsController : Controller
     {
         private MainDBContext db;
         private const int postsPerPage = 5;

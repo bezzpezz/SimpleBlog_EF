@@ -1,0 +1,33 @@
+﻿@model SimpleBlog_EF.ViewModels.PostsIndex
+<!-- Login Partial - Modal -->
+<div class=" hidden">
+    <div id="login-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.ValidationSummary()
+
+                        <div>
+                            @Html.LabelFor(x => x.Authlogin.Username)
+                            @Html.TextBoxFor(x => x.Authlogin.Username, new { @class = "form-control" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(x => x.Authlogin.Password)
+                            @Html.TextBoxFor(x => x.Authlogin.Password, new { @class = "form-control" })
+                        </div>
+
+                        <div>
+                            <input type="submit" id="login-submit" value="Login" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

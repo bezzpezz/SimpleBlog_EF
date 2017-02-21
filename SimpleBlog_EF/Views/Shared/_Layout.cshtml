@@ -7,49 +7,42 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu:400,700" rel="stylesheet">
 
-        @Styles.Render("~/styles")
-    </head>
-    <body class="body">
-        <header>
-            <h1>
-                <a href="@Url.RouteUrl("Home")">SimpleBlog</a></br>
-                @*<p>@ViewBag.hash</p>*@
-                <i class="glyphicon glyphicon-bell"></i>
-            </h1>
-
-            @if (User.Identity.IsAuthenticated)
-            {
-                <p>Welcome Back @User.Identity.Name</p>
-                <a href="@Url.RouteUrl("logout")">Logout</a>
-
-                if (User.IsInRole("admin"))
-                {
-                    <a href="@Url.Action("index", "home", new { area = "admin"})">Enter Admin Area!</a>
-                }
-                if (User.IsInRole("edit"))
-                {
-                    <a href="@Url.Action("index", "home", new { area = "admin"})">Edit</a>
-                }
-                if (User.IsInRole("user"))
-                {
-                    <a href="@Url.Action("index", "home", new { area = "admin"})">User</a>
-                }
-
-            }
+    @Styles.Render("~/styles")
+</head>
+<body class="body">
+    <div class="site-header">
+        <header class="container">
+            <div class="page-header">
+                <h1>
+                    <a href="@Url.RouteUrl("Home")">Awesome Blog</a>
+                    <small> - a simple blog powered by ASP.NET MVC</small>
+                </h1>
+            </div>
         </header>
-        <div>
-            @RenderBody()
-
-            <footer>
-                &copy; @DateTime.UtcNow.Year - Company Name
-            </footer>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                @RenderBody()
+            </div>
+            <div class="col-lg-4 sidebar">
+                @Html.Action("Sidebar", "Layout")
+            </div>
         </div>
-        @Scripts.Render("~/scripts")
-        @RenderSection("Scripts", false)
-    </body>
+
+
+        <footer class="page-footer">
+            &copy; @DateTime.UtcNow.Year
+        </footer>
+    </div>
+
+    @Scripts.Render("~/scripts")
+    @RenderSection("Scripts", false)
+</body>
 </html>

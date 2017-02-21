@@ -60,11 +60,18 @@ namespace SimpleBlog_EF
                 namespaces: namespaces
             );
 
-            // Home
+            // Home (post)
             routes.MapRoute(
                 name: "Home",
                 url: "",
                 defaults: new { controller = "Posts", action = "Index" },
+                namespaces: namespaces
+            );
+
+            routes.MapRoute(
+                name: "SideBar",
+                url: "",
+                defaults: new { controller = "Layout", action = "Sidebar" },
                 namespaces: namespaces
             );
 

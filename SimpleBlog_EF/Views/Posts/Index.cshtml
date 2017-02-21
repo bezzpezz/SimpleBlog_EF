@@ -1,7 +1,64 @@
 ﻿@model SimpleBlog_EF.ViewModels.PostsIndex
+
 @{
     ViewBag.Title = "Posts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Partial("_Posts", Model.Posts)
+
+
+<div id="login-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Login<i class="glyphicon glyphicon-lock pull-right"></i></h1>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("login", "Auth", FormMethod.Post, new { @id = "login-form" }))
+                {
+                    @Html.ValidationSummary()
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Authlogin.Username)
+                        @Html.TextBoxFor(x => x.Authlogin.Username, new { @class = "form-control", @id = "username" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Authlogin.Password)
+                        @Html.TextBoxFor(x => x.Authlogin.Password, new { @class = "form-control", @id = "password", @type = "password" })
+                        @*<input name="Authlogin.Password" type="password" class="form-control" id="password" />*@
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-primary login-submit" type="submit" id="login-submit" value="Login" />
+                        <a href="/">Or Cancel</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="logout-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Logout<i class="glyphicon glyphicon-lock pull-right"></i></h1>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("login", "Auth", FormMethod.Post, new { @id = "login-form" }))
+                {
+                    <div class="form-group text-center">
+                        <img id="loading" class="loading" src="~/Content/loader.gif"> Logging Out
+                    </div>
+
+                    <div class="form-group">
+                        <input class="btn btn-primary login-submit" type="submit" id="login-submit" value="Login" style="display:none;"/>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

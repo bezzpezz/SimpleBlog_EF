@@ -6,6 +6,7 @@ namespace SimpleBlog_EF.ViewModels
     public class PostsIndex
     {
         public PageData<Post> Posts { get; set; }
+        public AuthLogin Authlogin { get; set; }
     }
 
     public class PostsShow
